@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CloudPoodllTester</title>
+    <script src="cloudpoodll/amd/src/cloudpoodll.js?v=01" type="text/javascript"></script>
+</head>
+<body>
+--Recorder below here--
+<div class="cloudpoodll"
+     data-localloader="/poodllloader.html"
+     data-type="readaloud"
+     data-width="450"
+     data-transcode="1"
+     data-media="audio"
+     data-owner="jerry@poodll.com"
+     data-height="500" data-region="tokyo"
+     data-expiredays="180"
+     data-parent="http://localhost"
+     data-token="643eba92a1447ac0c6a882c85051461a"></div>
+
+--Recorder above here--
+<script type="text/javascript">
+CloudPoodll.autoCreateRecorders("cloudpoodll");
+CloudPoodll.theCallback=function(thedata){
+    console.log(thedata);
+    switch (thedata.type){
+        case 'error':
+            alert('Error: ' + thedata.message);
+            break;
+        case 'awaitingprocessing':
+            console.log('awaitingprocessing:' + thedata);
+            break;
+        case 'filesubmitted':
+            alert('filesubmitted:' + thedata.finalurl);
+            console.log('filesubmitted:' + thedata);
+            break;
+        case 'transcriptioncomplete':
+            alert('transcriptioncomplete:' + thedata.transcription);
+            break;
+    }
+};
+CloudPoodll.initEvents();
+</script>
+</body>
+</html>
