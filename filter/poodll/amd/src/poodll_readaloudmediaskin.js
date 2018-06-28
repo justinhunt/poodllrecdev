@@ -1,6 +1,7 @@
 /* jshint ignore:start */
 define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll/upskin_radial',
-    'filter_poodll/anim_hwave_ra','filter_poodll/dlg_devicesettings'], function($,jqui, log, utils, upskin_radial, hwave_ra,settings) {
+    'filter_poodll/anim_hwave_mic','filter_poodll/dlg_devicesettings'],
+    function($,jqui, log, utils, upskin_radial, hwave_mic,settings) {
 
     "use strict"; // jshint ;_;
 
@@ -227,8 +228,8 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
             var ip = this.fetch_instanceprops(controlbarid);
 
             //init recording anim
-            ip.config.recanim = 'hwave_ra';
-            var recanim=hwave_ra.clone();
+            ip.config.recanim = 'hwave_mic';
+            var recanim=hwave_mic.clone();
             self.therecanim = recanim;
             recanim.init(ip.audioanalyser,ip.controlbar.playcanvas.get(0));
 

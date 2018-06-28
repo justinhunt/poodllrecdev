@@ -5,8 +5,8 @@ var poodllstrings= {"recui_uploading": "Uploading", "recui_uploadsuccess": "Uplo
 M.str = {"moodle":moodlestrings, "filter_poodll": poodllstrings};
 M.util={};
 M.util.get_string=function(thekey,thecomponent){
- if(!M.str[thecomponent]){return '';};
- if(!M.str[thecomponent][thekey]){return '';};
+ if(!M.str[thecomponent]){return thekey;};
+ if(!M.str[thecomponent][thekey]){return thekey;};
  return M.str[thecomponent][thekey];
 };
 M.cfg = {};

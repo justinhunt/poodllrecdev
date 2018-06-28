@@ -75,7 +75,7 @@ define(['jquery','core/log','filter_poodll/upskin_plain'], function($, log, upsk
                 upc.get(0).value = filename;
             }else{
                 log.debug('upload failed #2');
-                uploader.upskin.showMessage(M.util.get_string('recui_uploaderror', 'filter_poodll'));
+                uploader.upskin.showMessage(M.util.get_string('recui_uploaderror', 'filter_poodll'),'recui_uploaderror');
                 return false;
             }
             upc.trigger('change');
@@ -99,7 +99,7 @@ define(['jquery','core/log','filter_poodll/upskin_plain'], function($, log, upsk
         completeAfterProcessing: function(uploader,filename, waitms){
 
             //alert the skin that we are awaiting processing
-            this.upskin.showMessage(M.util.get_string('recui_awaitingconversion', 'filter_poodll'));
+            this.upskin.showMessage(M.util.get_string('recui_awaitingconversion', 'filter_poodll'),'recui_awaitingconversion');
 
             //this will always be true ...
             if(uploader.config.iframeembed){
@@ -163,7 +163,7 @@ define(['jquery','core/log','filter_poodll/upskin_plain'], function($, log, upsk
             callbackObject[4] = uploader.config.s3filename;
 
             //alert the skin that we were successful
-            this.upskin.showMessage(M.util.get_string('recui_uploadsuccess', 'filter_poodll'));
+            this.upskin.showMessage(M.util.get_string('recui_uploadsuccess', 'filter_poodll'),'recui_uploadsuccess');
 
             //invoke callbackjs if we have one, otherwise just update the control(default behav.)
             if(!uploader.config.iframeembed) {
@@ -230,7 +230,7 @@ define(['jquery','core/log','filter_poodll/upskin_plain'], function($, log, upsk
                 }else{
                     log.debug('upload failed #3');
                     log.debug(xhr);
-                    uploader.upskin.showMessage(M.util.get_string('recui_uploaderror', 'filter_poodll'));
+                    uploader.upskin.showMessage(M.util.get_string('recui_uploaderror', 'filter_poodll'),'recui_uploaderror');
 
                     //alert the recorder that this failed
                     this.alertRecorderFailure(uploader.config.widgetid);
@@ -262,7 +262,7 @@ define(['jquery','core/log','filter_poodll/upskin_plain'], function($, log, upsk
             this.upskin.initProgressSession(xhr);
 
             //alert user that we are now uploading    
-            this.upskin.showMessage(M.util.get_string('recui_uploading', 'filter_poodll'));
+            this.upskin.showMessage(M.util.get_string('recui_uploading', 'filter_poodll'),'recui_uploading');
 
             xhr.onreadystatechange = function(e){
                 if(using_s3 && this.readyState===4) {
@@ -355,53 +355,9 @@ define(['jquery','core/log','filter_poodll/upskin_plain'], function($, log, upsk
                         break;
                 }
             }
-
-            //we no longer trigger post process cloud submissions from here. Lambda handles all that
+            //we now do cloud post processing from lambda, so we just return here.
             return;
-/*
-            //lets do a little error checking
-            //if its a self signed error or rotten permissions on poodllfilelib.php we might error here.
-            xhr.onreadystatechange = function(){
-                if(this.readyState===4){
-                    if(xhr.status!=200){
-                        that.upskin.showMessage('Post Process Upload from IframeEmbed Error:' + xhr.status);
-                        $('#' + that.config.widgetid + '_messages').show();
-                    }else{
-                        var payload = xhr.responseText;
-                        var payloadobject = JSON.parse(payload);
-                        if(payloadobject && payloadobject.returnCode > 0){
-                            //We alert the iframe host that somehting did not go right
-                            var messageObject ={};
-                            messageObject.type = "error";
-                            messageObject.code = payloadobject.returnCode;
-                            messageObject.message=payloadobject.returnMessage;
-                            uploader.config.hermes.postMessage(messageObject);
-                        }
-                    }
-                }
-            };
 
-
-            //log.debug(params);
-            var xhrparams =  "wstoken=" + config.wstoken
-                + "&wsfunction=local_cpapi_postprocess_upload"
-                + "&moodlewsrestformat=json"
-                + "&mediatype=" + config.mediatype
-                + "&filename=" + config.filename
-                + "&ext=" + ext
-                + '&parent=' + config.parent
-                + '&owner=' + config.owner
-                + '&region=' + config.region
-                + '&expiredays=' + config.expiredays
-                + '&transcode=' + config.transcode;
-
-            var serverurl= M.cfg.wwwroot + "/webservice/rest/server.php";
-            xhr.open("POST",serverurl, true);
-            xhr.setRequestHeader("Cache-Control", "no-cache");
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send(xhrparams);
-
-            */
 
         },
 
@@ -415,7 +371,7 @@ define(['jquery','core/log','filter_poodll/upskin_plain'], function($, log, upsk
             xhr.onreadystatechange = function(){
                 if(this.readyState===4){
                     if(xhr.status!=200){
-                       that.upskin.showMessage('Post Process s3 Upload Error:' + xhr.status);
+                       that.upskin.showMessage('Post Process s3 Upload Error:' + xhr.status, 'recui_uploaderror');
                        $('#' + that.config.widgetid + '_messages').show();
                      }
                 }
@@ -463,7 +419,7 @@ define(['jquery','core/log','filter_poodll/upskin_plain'], function($, log, upsk
 
         //some recorder skins call this directly, so we just pass it through to the upskin
         Output: function(msg){
-            this.upskin.showMessage(msg);
+            this.upskin.showMessage(msg,'recorderskinmsg');
         }
     };//end of returned object
 });//total end
