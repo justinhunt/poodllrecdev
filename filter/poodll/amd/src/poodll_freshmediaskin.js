@@ -3,7 +3,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
 
     "use strict"; // jshint ;_;
 
-    log.debug('PoodLL Fresh Skin: initialising');
+    log.debug('PoodLL BMR Skin: initialising');
 
 
 	
@@ -68,7 +68,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
         fetch_uploader_skin: function(controlbarid, element){
             var ip = this.fetch_instanceprops();
             var upskin = upskin_bar.clone();
-            upskin.init(ip.config,element,ip.controlbar.fresh_progresscanvas,ip.controlbar.status);
+            upskin.init(ip.config,element,ip.controlbar.bmr_progresscanvas,ip.controlbar.status);
             return upskin;
         },
         
@@ -129,7 +129,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
                    self.disable_button(ip.controlbar.startbutton);
                    self.show_element(ip.controlbar.startbutton);
 
-                   self.hide_element(ip.controlbar.fresh_progresscanvas);
+                   self.hide_element(ip.controlbar.bmr_progresscanvas);
 
                    self.enable_button(ip.controlbar.pausebutton);
                    self.show_element(ip.controlbar.pausebutton);
@@ -165,7 +165,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
 
                    self.disable_button(ip.controlbar.resumebutton);
                    self.hide_element(ip.controlbar.resumebutton);
-                   self.hide_element(ip.controlbar.fresh_progresscanvas);
+                   self.hide_element(ip.controlbar.bmr_progresscanvas);
 
                    if(!self.uploaded){
                        self.enable_button(ip.controlbar.startbutton);
@@ -182,7 +182,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
                         self.show_element(ip.controlbar.preview);
                     }
                    // ip.controlbar.status.addClass('hide');
-					//ip.controlbar.fresh_progresscanvas.removeClass('hide');
+					//ip.controlbar.bmr_progresscanvas.removeClass('hide');
 					self.enable_button(ip.controlbar.playbutton);
 
                     break;
@@ -194,7 +194,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
                    self.disable_button(ip.controlbar.startbutton);
                    self.disable_button(ip.controlbar.resumebutton);
                    self.disable_button(ip.controlbar.playbutton);
-                   self.show_element(ip.controlbar.fresh_progresscanvas);
+                   self.show_element(ip.controlbar.bmr_progresscanvas);
 
                    //If play has been pressed there is no "resuming"
                    self.show_element(ip.controlbar.startbutton);
@@ -218,7 +218,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
                case 'uploadmode':
                    self.disable_button(ip.controlbar.savebutton);
                    self.disable_button(ip.controlbar.startbutton);
-                   self.show_element(ip.controlbar.fresh_progresscanvas);
+                   self.show_element(ip.controlbar.bmr_progresscanvas);
                    break;
            }
 
@@ -258,26 +258,26 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
                 var record_icon = mediatype=='video' ?  'fa-video-camera' : 'fa-microphone';
 				var recorder_class = mediatype=='video' ?  'poodll_mediarecorder_video' : 'poodll_mediarecorder_audio';
 
-                var controls ='<div class="poodll_mediarecorderholder_fresh poodll_videorecorderholder_fresh '
+                var controls ='<div class="poodll_mediarecorderholder_bmr poodll_videorecorderholder_bmr ' 
                 	+ recorder_class + ' ' + size_class + '" id="holder_' + controlbarid + '">' ;
                 	
-                controls +='<div class="poodll_mediarecorderbox_fresh" id="' + controlbarid + '">' ;
+                controls +='<div class="poodll_mediarecorderbox_bmr" id="' + controlbarid + '">' ;
                 controls +='<audio style="display: none !important;" class="poodll-alert-recording" id="'+ controlbarid +'"><source src="https://poodll.com/wp-content/themes/Poodll-Theme/images/ding.mp3" type="audio/mpeg"></audio>' ;
                 controls +='<div class="style-holder ' + skin_style + '">' ;
-                controls +='<div class="poodll_statusholder_fresh" >' ;
-                  controls += '<canvas class="fresh_range"></canvas>';
-                  var status = this.fetch_status_bar('fresh');
+                controls +='<div class="poodll_statusholder_bmr" >' ;
+                  controls += '<canvas class="bmr_range"></canvas>';
+                  var status = this.fetch_status_bar('bmr');
                   controls += status;
                 controls += '</div>';
 
                 controls += preview,
 				controls += '<div class="settingsicon" id="settingsicon_'+controlbarid+'"><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fa fa-cogs" aria-hidden="true"></i></button></div>';
-                controls +=  '<button type="button" class="poodll_mediarecorder_button_fresh poodll_start-recording_fresh"><i class="fa ' + record_icon + '" aria-hidden="true"></i></button>';
-                controls += ' <button type="button" class="poodll_mediarecorder_button_fresh poodll_resume-recording_fresh fresh_disabled hide" disabled><i class="fa ' + record_icon + '" aria-hidden="true"></i></button>';
-                controls += '<button type="button" class="poodll_mediarecorder_button_fresh poodll_stop-recording_fresh fresh_disabled" disabled><i class="fa fa-stop" aria-hidden="true"></i></button>';
-                controls += '<button type="button" class="poodll_mediarecorder_button_fresh poodll_pause-recording_fresh fresh_disabled" disabled><i class="fa fa-pause" aria-hidden="true"></i></button>';
-                controls += ' <button type="button" class="poodll_mediarecorder_button_fresh poodll_play-recording_fresh fresh_disabled" disabled><i class="fa fa-play" aria-hidden="true"></i></button>';
-                controls += '<button type="button" class="poodll_save-recording_fresh ' + hideshowupload + '" disabled>' + ss['recui_save'] +'</button>';
+                controls +=  '<button type="button" class="poodll_mediarecorder_button_bmr poodll_start-recording_bmr"><i class="fa ' + record_icon + '" aria-hidden="true"></i></button>';
+                controls += ' <button type="button" class="poodll_mediarecorder_button_bmr poodll_resume-recording_bmr bmr_disabled hide" disabled><i class="fa ' + record_icon + '" aria-hidden="true"></i></button>';
+                controls += '<button type="button" class="poodll_mediarecorder_button_bmr poodll_stop-recording_bmr bmr_disabled" disabled><i class="fa fa-stop" aria-hidden="true"></i></button>';
+                controls += '<button type="button" class="poodll_mediarecorder_button_bmr poodll_pause-recording_bmr bmr_disabled" disabled><i class="fa fa-pause" aria-hidden="true"></i></button>';
+                controls += ' <button type="button" class="poodll_mediarecorder_button_bmr poodll_play-recording_bmr bmr_disabled" disabled><i class="fa fa-play" aria-hidden="true"></i></button>';
+                controls += '<button type="button" class="poodll_save-recording_bmr ' + hideshowupload + '" disabled>' + ss['recui_save'] +'</button>';
 						controls += '</div>';
 						controls += this.devsettings.fetch_dialogue_box();
                         controls += ip.errordialog.fetch_dialogue_box();
@@ -286,18 +286,18 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
                 $(element).prepend(controls);
                 var controlbar ={
 					poodll_recording_alert: $('#' + controlbarid + ' .poodll-alert-recording'),
-					fresh_progresscanvas: $('#' + controlbarid + ' .fresh_range'),
+					bmr_progresscanvas: $('#' + controlbarid + ' .bmr_range'),
                     settingsdialog: $('#' + controlbarid + ' .poodll_dialogue_box_settings'),
                     errorsdialog: $('#' + controlbarid + ' .poodll_dialogue_box_errors'),
 					settingsicon: $('#' + controlbarid + ' .settingsicon'),
-                    status: $('#' + controlbarid + ' .poodll_status_fresh'),
-                    preview: $('#' + controlbarid + ' .poodll_preview_fresh'),
-                    startbutton: $('#' + controlbarid + ' .poodll_start-recording_fresh'),
-                    stopbutton: $('#' + controlbarid + ' .poodll_stop-recording_fresh'),
-                    pausebutton: $('#' + controlbarid + ' .poodll_pause-recording_fresh'),
-                    resumebutton: $('#' + controlbarid + ' .poodll_resume-recording_fresh'),
-                    playbutton: $('#' + controlbarid + ' .poodll_play-recording_fresh'),
-                    savebutton: $('#' + controlbarid + ' .poodll_save-recording_fresh')
+                    status: $('#' + controlbarid + ' .poodll_status_bmr'),
+                    preview: $('#' + controlbarid + ' .poodll_preview_bmr'),
+                    startbutton: $('#' + controlbarid + ' .poodll_start-recording_bmr'),
+                    stopbutton: $('#' + controlbarid + ' .poodll_stop-recording_bmr'),
+                    pausebutton: $('#' + controlbarid + ' .poodll_pause-recording_bmr'),
+                    resumebutton: $('#' + controlbarid + ' .poodll_resume-recording_bmr'),
+                    playbutton: $('#' + controlbarid + ' .poodll_play-recording_bmr'),
+                    savebutton: $('#' + controlbarid + ' .poodll_save-recording_bmr')    
                 };
 
 
@@ -308,7 +308,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
             this.devsettings.set_dialogue_box(controlbar.settingsdialog);
 			return controlbar;
 
-        }, //end of fetch_control_bar_fresh
+        }, //end of fetch_control_bar_bmr
 
 
         register_controlbar_events_video: function(onMediaSuccess,  controlbarid) {
@@ -327,7 +327,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
 			
 			 //init progress bar
             var hprogress = anim_progress_bar.clone();
-            hprogress.init(ip.controlbar.fresh_progresscanvas);
+            hprogress.init(ip.controlbar.bmr_progresscanvas);
 
 			
             ip.controlbar.startbutton.click(function() {
@@ -428,7 +428,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
                 }
             };
 			
-        }, //end of register_control_bar_events_fresh
+        }, //end of register_control_bar_events_bmr
 
         show_element: function(element){
             $(element).removeClass('hide');
@@ -440,11 +440,11 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd','filter_poodll/
         },
         enable_button: function(button){
             $(button).attr('disabled',false);
-			$(button).removeClass('fresh_disabled');
+			$(button).removeClass('bmr_disabled');		
         },
         disable_button: function(button){
             $(button).attr('disabled',true);
-			$(button).addClass('fresh_disabled');
+			$(button).addClass('bmr_disabled');   
         },
 		
     };//end of returned object
