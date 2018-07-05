@@ -143,6 +143,7 @@ require(['jquery','core/log','filter_poodll/poodll_mediarecorder'], function($,l
         + '&owner=' + params['owner']
         + '&region=' + params['region']
         + '&expiredays=' + params['expiredays']
+        + '&transcode=' + params['transcode']
         + '&transcribe=' + params['transcribe']
         + '&subtitle=' + params['subtitle']
         + '&transcribelanguage=' + params['language']
