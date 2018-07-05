@@ -150,7 +150,8 @@ require(['jquery','core/log','filter_poodll/poodll_mediarecorder'], function($,l
         + '&transcribevocab=' + params['transcribevocab']
         + '&notificationurl=' + params['notificationurl'];
 
-    var serverurl= M.cfg.wwwroot + "/webservice/rest/server.php";
+    //var serverurl= M.cfg.wwwroot + "/webservice/rest/server.php";
+    var serverurl="https://cloud.poodll.com/webservice/rest/server.php";
     xhr.open("POST",serverurl, true);
     xhr.setRequestHeader("Cache-Control", "no-cache");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
