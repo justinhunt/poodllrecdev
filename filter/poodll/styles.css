@@ -403,100 +403,119 @@ button.poodll_mediarecorder_button_readaloud {
 /*********************************************END****************************************/
 
 /*
-	The Once Audio Recorder
+	The Once Recorder
 */
 
 .poodll_mediarecorderholder_once{
-	position:relative;
+    position:relative;
 }
 
 .poodll_mediarecorderholder_once .settingsicon{
-	position: absolute;
-	bottom: 75px;
-	right: 250px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
 }
 .poodll_mediarecorderholder_once .settingsicon button{
-	border: none !important;
-	background: transparent !important;
+    border: none !important;
+    background: transparent !important;
 }
 .poodll_mediarecorderholder_once .settingsicon button i{
-	font-size: 18px !important;
-	color: #333 !important;
+    font-size: 18px !important;
+    color: #333 !important;
 }
 .poodll_mediarecorderholder_once .settingsicon button:focus{
-	border: none;
-	background: transparent;
+    border: none;
+    background: transparent;
 }
 .poodll_mediarecorderholder_once .settingsicon button i:hover{
-	cursor: pointer;
+    cursor: pointer;
 }
 
-.poodll_mediarecorder_audio .poodll_mediarecorderbox_once{
-	text-align: center;
-	border: 1px solid #CCCCCC;
-	border-radius: 5px;
-	padding: 5px;
+.poodll_mediarecorder_audio .poodll_mediarecorderbox_once,
+.poodll_mediarecorder_video .poodll_mediarecorderbox_once{
+    text-align: center;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding: 5px;
+    max-width: 320px;
 }
 
 .poodll_mediarecorderbox_once button:hover{
-	cursor: pointer;
-	filter: brightness(120%);
+    cursor: pointer;
+    filter: brightness(120%);
 }
 .poodll_mediarecorderbox_once .poodll_start-recording_once{
-	background-color: #93c47d;
+    background-color: #93c47d;
 }
 .poodll_mediarecorderbox_once .poodll_stop-recording_once{
-	background-color: #ea9999;
+    background-color: #ea9999;
 }
 .poodll_mediarecorderbox_once .poodll_test-recording_once{
-	background-color: #9fc5f8;
+    background-color: #9fc5f8;
 }
 
 .poodll_mediarecorderbox_once canvas{
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 button.poodll_mediarecorder_button_once {
 
-	transition: filter 0.5s ease;
-	margin: auto;
-	width: 200px;
-	color: #fff;
-	background-color: #00acdf;
-	border-color: #00acdf;
-
-	display: inline-block;
-	font-weight: 400;
-	line-height: 1.25;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	border: 1px solid transparent;
-	padding: .5rem 1rem;
-	font-size: 1rem;
-	border-radius: .25rem;
+    transition: filter 0.5s ease;
+    margin: auto;
+    width: 200px;
+    color: #fff;
+    background-color: #00acdf;
+    border-color: #00acdf;
+    display: block;
+    font-weight: 400;
+    line-height: 1.25;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    border-radius: .25rem;
 }
 
 .poodll_mediarecorderholder_once .poodll_mediarecorderbox_once{
-	position: relative;
+    position: relative;
 }
 .poodll_mediarecorderholder_once .poodll_mediarecorderbox_once .pmr_disabled{
-	display: none;
+    display: none;
 }
 
 .poodll_mediarecorderholder_once .poodll_mediarecorderbox_once button:focus {
-	outline-style: none;
+    outline-style: none;
 }
 .poodll_mediarecorderbox_once .poodll_status_once {
-	font-size: 2em;
-	font-family: georgia;
-	margin-top: 2px;
-	margin-bottom: 20px;
+    font-size: 2em;
+    font-family: georgia;
+    margin-top: 2px;
+    margin-bottom: 20px;
 }
+
+video.poodll_preview_once {
+    width: 280px;
+	min-height: 210px;
+}
+div.poodll_mediarecorder_video  canvas.poodll_mediarecorder_uploadcanvas_once {
+	margin: auto;
+	display: block;
+}
+div.poodll_mediarecorder_video div.poodll_status_once {
+	position: absolute;
+	background-color: #eee;
+	opacity: 0.5;
+	top: 16px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
 /*********************************************END****************************************/
 
 

@@ -1,7 +1,7 @@
 
 M={};
 var moodlestrings= {"lastmodified":"Last modified","name":"Name","error":"Error","info":"Information","yes":"Yes","no":"No","cancel":"Cancel","confirm":"Confirm","areyousure":"Are you sure?","closebuttontitle":"Close","unknownerror":"Unknown error"};
-var poodllstrings= {"recui_uploading": "Uploading", "recui_uploadsuccess": "Uploaded Successfully",  "recui_awaitingconversion": "Awaiting conversion", "recui_startactivity": "Start Activity", "recui_testmic": "Test Microphone", "recui_stop": "Stop"};
+var poodllstrings= {"recui_uploading": "Uploading", "recui_uploadsuccess": "Uploaded Successfully",  "recui_awaitingconversion": "Awaiting conversion", "recui_record": "Record","recui_start": "Start","recui_startactivity": "Start Activity", "recui_testmic": "Test Microphone", "recui_stop": "Stop"};
 M.str = {"moodle":moodlestrings, "filter_poodll": poodllstrings};
 M.util={};
 M.util.get_string=function(thekey,thecomponent){
