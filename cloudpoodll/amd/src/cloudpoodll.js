@@ -21,12 +21,14 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.1.8',
-        //baseURL: 'https://cloud.poodll.com/local/cpapi/poodllloader.php',
-        baseURL: 'http://localhost/poodllrecdev/poodllloader.html',
+        version: '1.2.4',
+        baseURL: 'http://localhost/poodllrecdev/fastpoodllloader.php',
+        //baseURL: 'https://cloud.poodll.com/local/cpapi/fastpoodllloader.php',
+       // baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
-            'iframeclass','transcode','transcribe','subtitle','language','transcribevocab',
-            'expiredays','owner','region','token','localloader','notificationurl','speechevents','hints','alreadyparsed'],
+            'iframeclass','transcode','transcoder','transcribe','subtitle','language','transcribevocab',
+            'expiredays','owner','region','token','localloader','localloading','notificationurl',
+            'speechevents','hints','alreadyparsed','fallback'],
 
         fetchContainers: function(classname){
             var divs = document.getElementsByClassName(classname);
@@ -69,9 +71,9 @@
             //cancel out if this div was already processed
             if(attributes.hasOwnProperty('alreadyparsed') ){
                 if(attributes['alreadyparsed']=='true'){
-                    console.log("Can only parse a cloudpoodll element once. Cancelling.")
+                    console.log("Can only parse a cloudpoodll element once. Cancelling.");
                     return false;
-                };
+                }
             }
 
             //fix up default attributes if the user did not set them
@@ -88,14 +90,35 @@
             var iframe = document.createElement('iframe');
 
             //set up the base URL for the iframe
-            //if we need to load locally from html we do that
-            var isIOS_safari = this.is_ios() || this.is_safari();
-            if(isIOS_safari && attributes.hasOwnProperty('localloader')){
-                var iframeurl = attributes['parent']  + attributes['localloader'] + '?';
+            //if we need and can load locally from html we do that
+            if(!attributes.hasOwnProperty('localloader')){
+                var localloading = 'never';
             }else {
-                var iframeurl = this.baseURL + '?';
+                var localloading = attributes.hasOwnProperty('localloading') ? attributes['localloading'] : 'auto';
             }
 
+            switch(localloading){
+
+                case 'always':
+                    var iframeurl = attributes['parent'] + attributes['localloader'] + '?';
+                    break;
+
+                case 'never':
+                    var iframeurl = this.baseURL + '?';
+                    break;
+
+                case 'auto':
+                default:
+                    var isIOS_safari = this.is_ios() || this.is_safari();
+                    if(isIOS_safari) {
+                        var iframeurl = attributes['parent'] + attributes['localloader'] + '?';
+                    }else {
+                        var iframeurl = this.baseURL + '?';
+                    }
+                    break;
+            }
+
+            //build iframeurl based on baseurl and attributes
             for (var property in attributes) {
                 iframeurl = iframeurl + property + '=' + attributes[property] + '&';
             }
@@ -125,13 +148,17 @@
             return iframe;
         },
         theCallback: function(data) {
-            if(data.type =='filesubmitted'){
-                var inputControl = data.updatecontrol;
-                var pokeInput = document.getElementById(inputControl);
-                var theurl = data.mediaurl;
-                if (pokeInput) {
-                    pokeInput.value = theurl;
-                }
+            switch(data.type){
+                case 'filesubmitted':
+                    var inputControl = data.updatecontrol;
+                    var pokeInput = document.getElementById(inputControl);
+                    var theurl = data.mediaurl;
+                    if (pokeInput) {
+                        pokeInput.value = theurl;
+                    }
+                    break;
+                case 'error':
+                    alert('ERROR:' . data.message);
             }
         },
         initEvents: function(){
@@ -153,6 +180,6 @@
 
         is_ios: function(){
             return  /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        },
+        }
     };//end of returned object (poodllcloud)
 });//end of factory method container

@@ -34,7 +34,6 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
 
         onUploadSuccess: function(controlbarid){
              $('#' + controlbarid + ' > .poodll_save-recording').hide();
-            // $('#' + controlbarid  + '_messages').hide();
              $('#' + controlbarid + ' > .poodll_savedsuccessfully').show();
         },
         
@@ -48,19 +47,19 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
         },
         
         fetch_preview_audio: function(skinname){
-            var preview = '<audio class="poodll_preview_' + skinname + ' hide"></audio>';
+            var preview = '<audio class="poodll_preview_' + skinname + '" style="display: none;"></audio>';
             return preview;
         },
         fetch_preview_video: function(skinname){
-            var preview = '<video class="poodll_preview_' + skinname + ' hide"></video>';
+            var preview = '<video class="poodll_preview_' + skinname + '" style="display: none;"></video>';
             return preview;
         },
         fetch_resource_audio: function(skinname){
-            var resourceplayer = '<audio class="poodll_resourceplayer_' + skinname + ' hide" ></audio>';
+            var resourceplayer = '<audio class="poodll_resourceplayer_' + skinname + '" style="display: none;" ></audio>';
             return resourceplayer;
         },
         fetch_resource_video: function(skinname){
-            var resourceplayer = '<video class="poodll_resourceplayer_' + skinname + ' hide" ></video>';
+            var resourceplayer = '<video class="poodll_resourceplayer_' + skinname + '" style="display: none;"></video>';
             return resourceplayer;
         },
 
@@ -142,10 +141,10 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
                    self.therecanim.clear();
                    if(ip.config.mediatype=='video'){
                        ip.controlbar.playcanvas.hide();
-                       ip.controlbar.preview.removeClass('hide');
+                       ip.controlbar.preview.show();
                    }else{
                        ip.controlbar.playcanvas.show();
-                       ip.controlbar.preview.addClass('hide');
+                       ip.controlbar.preview.hide();
                    }
                    break;
 
@@ -155,10 +154,10 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
                    self.disable_button(ip.controlbar.startbutton);
                    if(ip.config.mediatype=='video'){
                        ip.controlbar.playcanvas.hide();
-                       ip.controlbar.preview.removeClass('hide');
+                       ip.controlbar.preview.show();
                    }else{
                        ip.controlbar.playcanvas.show();
-                       ip.controlbar.preview.addClass('hide');
+                       ip.controlbar.preview.hide();
                    }
 
                    ip.controlbar.uploadcanvas.hide();
@@ -174,7 +173,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
                    self.therecanim.clear();
                    ip.controlbar.playcanvas.hide();
                    if(ip.config.mediatype=='video'){
-                       ip.controlbar.preview.addClass('hide');
+                       ip.controlbar.preview.hide();
                    }
                    ip.controlbar.uploadcanvas.show();
                    ip.controlbar.status.show();
@@ -205,9 +204,9 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
 				var size_class = 'poodll_mediarecorder_size_auto';
 
 				var ss = this.pmr.fetch_strings();
-                var ss_startlabel = M.util.get_string('recui_record','filter_poodll');
-                var ss_testlabel = M.util.get_string('recui_testmic','filter_poodll');
-                var ss_stoplabel = M.util.get_string('recui_stop','filter_poodll');
+                var ss_startlabel = ss['recui_record'];
+                var ss_testlabel = ss['recui_testmic'];
+                var ss_stoplabel = ss['recui_stop'];
 
                 var status = this.fetch_status_bar('once');
                 var controls ='<div class="poodll_mediarecorderholder_once '
@@ -215,6 +214,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
                 	
                 controls +='<div class="poodll_mediarecorderbox_once" id="' + controlbarid + '">' ;
                 controls += this.devsettings.fetch_dialogue_box();
+                controls += ip.downloaddialog.fetch_dialogue_box();
                 controls += ip.errordialog.fetch_dialogue_box();
                 controls +='<div class="style-holder ' + skin_style + '">' ;
                 controls += preview,
@@ -237,6 +237,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
                 //<i class="fa fa-stop" aria-hidden="true"></i>
                 var controlbar ={
                     settingsdialog: $('#' + controlbarid + ' .poodll_dialogue_box_settings'),
+                    downloaddialog: $('#' + controlbarid + ' .poodll_dialogue_box_download'),
                     errorsdialog: $('#' + controlbarid + ' .poodll_dialogue_box_errors'),
 					settingsicon: $('#' + controlbarid + ' .settingsicon'),
                     status: $('#' + controlbarid + ' .poodll_status_once'),
@@ -247,9 +248,9 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
                     uploadcanvas: $('#' + controlbarid + '_uploadcanvas') ,
                     uploadmessages: $('#' + controlbarid + ' .poodll_uploadmessages_once')
                 };
-            //settings and error dialogs
-            //They use the same dialog and just fill it with diofferent stuff
+            //settings and error and download dialogs
             //settings is on 'this' because it is shown from skkn events, but errors are from pmr stuff
+            ip.downloaddialog.set_dialogue_box(controlbar.downloaddialog);
             ip.errordialog.set_dialogue_box(controlbar.errorsdialog);
             this.devsettings.set_dialogue_box(controlbar.settingsdialog);
 
@@ -278,7 +279,11 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
 
 
 			ip.controlbar.settingsicon.click(function(){
-				self.devsettings.open();
+                if(!self.uploaded) {
+                    self.devsettings.open();
+                }else{
+                    ip.downloaddialog.open();
+                }
 			});
 			
             //Start button click

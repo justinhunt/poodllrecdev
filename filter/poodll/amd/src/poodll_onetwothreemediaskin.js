@@ -46,7 +46,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
         },
         
         fetch_preview_audio: function(skin){
-            var preview = '<audio class="audio_preview_123 poodll_preview_' + skin + ' hide" width="100%" height="100%" controls></audio>';
+            var preview = '<audio class="audio_preview_123 poodll_preview_' + skin + '" style="display: none;" width="100%" height="100%" controls></audio>';
             return preview;
         },
         fetch_preview_video: function(skin){
@@ -54,11 +54,11 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
             return preview;
         },
         fetch_resource_audio: function(skin){
-            var resourceplayer = '<audio class="poodll_resourceplayer_' + skin + ' hide" ></audio>';
+            var resourceplayer = '<audio class="poodll_resourceplayer_' + skin + '" style="display: none;"></audio>';
             return resourceplayer;
         },
         fetch_resource_video: function(skin){
-            var resourceplayer = '<video class="poodll_resourceplayer_' + skin + ' hide" ></video>';
+            var resourceplayer = '<video class="poodll_resourceplayer_' + skin + '" style="display: none;"></video>';
             return resourceplayer;
         },
         fetch_uploader_skin: function(controlbarid, element){
@@ -284,11 +284,11 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
 							controls += preview,
 							controls += '<div class="settingsicon" id="settingsicon_'+controlbarid+'"><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fa fa-cogs" aria-hidden="true"></i></button></div>';
 							controls +=  '<button type="button" class="poodll_mediarecorder_button_onetwothree poodll_start-recording_onetwothree"><i class="fa fa-microphone" aria-hidden="true"></i></button> ';
-							controls += '<button type="button" class="poodll_mediarecorder_button_onetwothree poodll_stop-recording_onetwothree pmr_disabled hide" disabled><i class="fa fa-stop" aria-hidden="true"></i></button>';
-							controls += '<button type="button" class="poodll_mediarecorder_button_onetwothree poodll_pause-recording_onetwothree pmr_disabled hide" disabled><i class="fa fa-pause" aria-hidden="true"></i></button>';
-							controls += ' <button type="button" class="poodll_mediarecorder_button_onetwothree poodll_resume-recording_onetwothree pmr_disabled hide" disabled><i class="fa fa-microphone" aria-hidden="true"></i></button>';
+							controls += '<button type="button" class="poodll_mediarecorder_button_onetwothree poodll_stop-recording_onetwothree pmr_disabled" style="display: none;" disabled><i class="fa fa-stop" aria-hidden="true"></i></button>';
+							controls += '<button type="button" class="poodll_mediarecorder_button_onetwothree poodll_pause-recording_onetwothree pmr_disabled" style="display: none;" disabled><i class="fa fa-pause" aria-hidden="true"></i></button>';
+							controls += ' <button type="button" class="poodll_mediarecorder_button_onetwothree poodll_resume-recording_onetwothree pmr_disabled" style="display: none;" disabled><i class="fa fa-microphone" aria-hidden="true"></i></button>';
 							controls += '<button type="button" class="poodll_mediarecorder_button_onetwothree poodll_play-recording_onetwothree pmr_disabled" disabled><i class="fa fa-play" aria-hidden="true"></i></button> ';
-							controls += '<button type="button" class="poodll_mediarecorder_button_onetwothree poodll_stop-playing_onetwothree pmr_disabled hide" disabled><i class="fa fa-stop" aria-hidden="true"></i></button>';
+							controls += '<button type="button" class="poodll_mediarecorder_button_onetwothree poodll_stop-playing_onetwothree pmr_disabled" style="display: none;" disabled><i class="fa fa-stop" aria-hidden="true"></i></button>';
 							controls += '<button type="button" class="poodll_mediarecorder_button_onetwothree poodll_save-recording_onetwothree pmr_disabled" disabled><i class="fa fa-upload" aria-hidden="true"></i></button>';
 							controls += '<div style="clear:both;">';
 							controls += '<div class="task-helper">';
@@ -299,6 +299,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
 						controls += '</div>';
 					controls += '</div>';
 					controls += this.devsettings.fetch_dialogue_box();
+                    controls += ip.downloaddialog.fetch_dialogue_box();
                     controls += ip.errordialog.fetch_dialogue_box();
                 controls += '</div>';
 				
@@ -306,6 +307,7 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
 
                 var controlbar ={
                     settingsdialog: $('#' + controlbarid + ' .poodll_dialogue_box_settings'),
+                    downloaddialog: $('#' + controlbarid + ' .poodll_dialogue_box_download'),
                     errorsdialog: $('#' + controlbarid + ' .poodll_dialogue_box_errors'),
 					settingsicon: $('#' + controlbarid + ' .settingsicon'),
 					stepone: $('#' + controlbarid + ' .step-1'),
@@ -325,9 +327,9 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
                     savebutton: $('#' + controlbarid + ' .poodll_save-recording_onetwothree')    
                 };
                 
-                //settings and error dialogs
-                //They use the same dialog and just fill it with diofferent stuff
+                //settings and error and download dialogs
                 //settings is on 'this' because it is shown from skkn events, but errors are from pmr stuff
+                ip.downloaddialog.set_dialogue_box(controlbar.downloaddialog);
                 ip.errordialog.set_dialogue_box(controlbar.errorsdialog);
                 this.devsettings.set_dialogue_box(controlbar.settingsdialog);
                 
@@ -345,12 +347,16 @@ define(['jquery','jqueryui','core/log','filter_poodll/utils_amd', 'filter_poodll
             var stage= this.stage;
             var ip = this.fetch_instanceprops(controlbarid);
             
-            //init radial progress
+            //init linear progress
             var hprogress = anim_progress_bar.clone();
             hprogress.init(ip.controlbar.progresscanvas);
 
 			ip.controlbar.settingsicon.click(function(){
-				self.devsettings.open();
+			    if(!self.uploaded) {
+                    self.devsettings.open();
+                }else{
+			        ip.downloaddialog.open();
+                }
 			});
 			
 			ip.controlbar.startbutton.click(function() {

@@ -1,7 +1,6 @@
 /* jshint ignore:start */
 define(['jquery', 'core/log',
     'filter_poodll/poodll_basemediaskin',
-    'filter_poodll/poodll_burntrosemediaskin',
     'filter_poodll/poodll_onetwothreemediaskin',
     'filter_poodll/poodll_goldmediaskin',
     'filter_poodll/poodll_bmrmediaskin',
@@ -10,7 +9,9 @@ define(['jquery', 'core/log',
     'filter_poodll/poodll_fbmediaskin',
     'filter_poodll/poodll_readaloudmediaskin',
     'filter_poodll/poodll_oncemediaskin',
-    'filter_poodll/poodll_freshmediaskin'], function($, log, baseskin, burntroseskin, onetwothreeskin, goldskin, bmrskin, shadowskin,splitskin, fluencybuilderskin, readaloudskin,onceskin, freshskin) {
+    'filter_poodll/poodll_freshmediaskin',
+    'filter_poodll/poodll_uploadmediaskin',
+    'filter_poodll/poodll_warningmediaskin'], function($, log, baseskin, onetwothreeskin, goldskin, bmrskin, shadowskin,splitskin, fluencybuilderskin, readaloudskin,onceskin, freshskin, uploadskin, warningskin) {
 
     "use strict"; // jshint ;_;
 
@@ -25,12 +26,12 @@ define(['jquery', 'core/log',
                 case 'onetwothree':
                     the_skin = onetwothreeskin.clone();
                     break;
-                case 'burntrose':
-                    the_skin = burntroseskin.clone();
-                    break;
+
                 case 'gold':
                     the_skin = goldskin.clone();
                     break;
+
+                case 'burntrose':
                 case 'bmr':
                     the_skin = bmrskin.clone();
                     break;
@@ -52,6 +53,12 @@ define(['jquery', 'core/log',
                 case 'fresh':
                     the_skin = freshskin.clone();
                     break;
+                case 'upload':
+                    the_skin = uploadskin.clone();
+                    break;
+                case 'warning':
+                    the_skin = warningskin.clone();
+                    break;
                 case 'plain':
                 case 'standard':
                 default:
@@ -59,6 +66,5 @@ define(['jquery', 'core/log',
             }
             return the_skin;
         }
-
     };// end of returned object
 });// total end

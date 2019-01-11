@@ -1,5 +1,23 @@
 Change List
 =========
+Version 1.2.4
+-added a default error handler. Most apps will never see it because they override the callback
+
+Version 1.2.3
+-Added support for Transcoder flag
+
+Version 1.2.2
+-Eek. Fixed bug in local loading
+
+Version 1.2.1
+-Added ability to force local loading
+
+Version 1.2.0
+-Added upload and warning skins
+
+Version 1.1.8 (Build 2018070500)
+-Added subtitle and appid params
+
 Version 1.10 (Build 2018050300)
 -Tweaks to event code and many changes
 
